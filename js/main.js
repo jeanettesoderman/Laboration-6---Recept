@@ -42,4 +42,10 @@ async function fetchRecipes(searchTerm) {
     const data = await response.json();
 
     console.log(data);
+
+    // Hämtar det första receptet
+    const firstRecipe = data.recipes[0];
+
+    console.log(firstRecipe);
+    console.log(firstRecipe.name);
 }

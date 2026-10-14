@@ -29,4 +29,17 @@ const searchTerm = searchInput.value.trim();
 // Skriver ut sökfrasen i konsolen
 console.log(searchTerm);
 
+// Anropar funktionen som hämtar recept
+fetchRecipes(searchTerm);
+
 });
+
+// Hämar recept från API:et
+async function fetchRecipes(searchTerm) {
+    const url = `https://dummyjson.com/recipes/search?q=${encodeURIComponent(searchTerm)}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    console.log(data);
+}

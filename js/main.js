@@ -6,8 +6,15 @@
 
 // Hämtar formulär och sökfält från Html
 const form = document.querySelector("#searchform");
+
+// Hämtar sökfältet där användaren skriver sökfrasen 
 const searchInput = document.querySelector("#search");
+
+// Här visas felmeddelande om sökfältet är tomt
 const errorMessage = document.querySelector("#error");
+
+// Hämtar sektionen där receptet ska visas
+const recipeContainer = document.querySelector("#recipe");
 
 // Lyssnar efter att formulär skickas
 form.addEventListener("submit", function(event) {
@@ -48,4 +55,34 @@ async function fetchRecipes(searchTerm) {
 
     console.log(firstRecipe);
     console.log(firstRecipe.name);
+
+    // Tar bort tidigare recept
+    recipeContainer.innerHTML = "";
+
+    // Skapar en ruta som ska innehålla hela receptet
+    const recipeArticle = document.createElement("article");
+
+    // Skapar en ny h3 
+    const recipeTitle = document.createElement("h3");
+
+    // Lägger till receptets namn i rubriken h3
+    recipeTitle.textContent = firstRecipe.name;
+
+    // Skapar en bild till receptet
+    const recipeImage = document.createElement("img");
+
+    //Hämtar bildens adress freån receptet
+    recipeImage.src = firstRecipe.image;
+
+    // Ger bilden en beskrivande text
+    recipeImage.alt = firstRecipe.name;
+
+    // Lägger bilden under rubriken
+    recipeArticle.appendChild(recipeImage);
+
+    // Lägger till h3:an i recepts article
+    recipeArticle.appendChild(recipeTitle);
+
+    // Lägger till hela receptet i receptsektionen
+    recipeContainer.appendChild(recipeArticle);
 }

@@ -167,6 +167,35 @@ async function fetchRecipes(searchTerm) {
         // Lägger till ingredienslistan i receptet
         recipeArticle.appendChild(IngredientsList);
 
+        // Skapar en rubrik för instruktioner
+        const instructionsTitle = document.createElement("h4");
+
+        // Lägger till texten i rubriken
+        instructionsTitle.textContent = "Instructions";
+
+        // Lägger till h4:an i receptet
+        recipeArticle.appendChild(instructionsTitle);
+
+        // Skapar en numrerad lista med instruktioner
+        const instructionsList = document.createElement("ol");
+
+            // Går igenom alla instruktioner
+            firstRecipe.instructions.forEach(function(instructions) {
+
+                // Skapar en rad för instruktion
+                const instructionList = document.createElement("li");
+
+                // Lägger till instruktionens namn
+                instructionList.textContent = instructions;
+
+                // Lägger till i listan
+                instructionsList.appendChild(instructionList);
+            });
+
+            // Lägger till listan med instruktiuoner i receptet
+            recipeArticle.appendChild(instructionsList);
+
+
     // Lägger till h3:an i recepts article
     recipeArticle.appendChild(recipeTitle);
 

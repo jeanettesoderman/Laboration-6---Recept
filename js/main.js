@@ -102,6 +102,9 @@ function displayRecipe(firstRecipe) {
     // Lägger till receptets namn i rubriken h3
     recipeTitle.textContent = firstRecipe.name;
 
+    // Lägger till rubriken i receptet
+    recipeArticle.appendChild(recipeTitle);
+
     // Skapar en bild till receptet
     const recipeImage = document.createElement("img");
 

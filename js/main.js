@@ -16,6 +16,9 @@ const errorMessage = document.querySelector("#error");
 // Hämtar sektionen där receptet ska visas
 const recipeContainer = document.querySelector("#recipe");
 
+// Här visas ett meddelande om ett recept inte hittas
+const message = document.querySelector("#message");
+
 // Lyssnar efter att formulär skickas
 form.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -48,6 +51,16 @@ async function fetchRecipes(searchTerm) {
     const response = await fetch(url);
     const data = await response.json();
 
+    // Tar bort tidigare meddelanden
+    message.textContent = "";
+
+    // Kollar om sökningen gav några recept
+    if (data.recipes.length === 0) {
+        recipeContainer.innerHTML = "";
+        message.textContent = "No recipes to be found. Try another search";
+        return;
+    }
+
     console.log(data);
 
     // Hämtar det första receptet
@@ -79,6 +92,52 @@ async function fetchRecipes(searchTerm) {
 
     // Lägger bilden under rubriken
     recipeArticle.appendChild(recipeImage);
+
+    // Skapar en ruta för information om eceptet
+    const recipeInfo = document.createElement("div");
+
+    // Rutan får samma klass som i cssfilen
+    recipeInfo.className = "recipe-info";
+
+    // Visar antalet portioner
+    const servings = document.createElement("p");
+
+    // Hämtar antalet portioner från receptet
+    servings.textContent = `Servings: ${firstRecipe.servings}`;
+
+    // Lägger in texten i inforutan
+    recipeInfo.appendChild(servings);
+
+    // Här visas förberedelsetiden
+    const prepTime = document.createElement("p");
+
+    // Hämtar förberedelsetiden från receptet
+    prepTime.textContent = `Preparation time: ${firstRecipe.prepTimeMinutes} minutes`;
+
+    // Lägger till tiden i inforutan
+    recipeInfo.appendChild(prepTime);
+
+    // Här visas tillagningstiden
+    const cookTime = document.createElement("p");
+
+    // Hämtar tillagningstiden från receptet
+    cookTime.textContent = `Cooking time: ${firstRecipe.cookTimeMinutes} minutes`;
+
+    // Lägger till tiden i inforutan
+    recipeInfo.appendChild(cookTime);
+
+    // Här visas svårighetsgraden
+    const difficulty = document.createElement("p");
+
+    // Hämtar svårighetsgraden från receptet
+    difficulty.textContent = `Difficulty: ${firstRecipe.difficulty}`;
+
+    // Lägger till svårighetsgraden i inforutan
+    recipeInfo.appendChild(difficulty);
+    
+
+    // Lägger informationen i receptet
+    recipeArticle.appendChild(recipeInfo);
 
     // Lägger till h3:an i recepts article
     recipeArticle.appendChild(recipeTitle);

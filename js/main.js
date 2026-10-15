@@ -46,9 +46,16 @@ fetchRecipes(searchTerm);
 
 // Hämar recept från API:et
 async function fetchRecipes(searchTerm) {
+    try {
     const url = `https://dummyjson.com/recipes/search?q=${encodeURIComponent(searchTerm)}`;
 
     const response = await fetch(url);
+
+    // Kolar om servern svarar som den ska
+    if (!response.ok) {
+        throw new Error("Could not fetch recipes");
+    }
+
     const data = await response.json();
 
     // Tar bort tidigare meddelanden
@@ -196,9 +203,17 @@ async function fetchRecipes(searchTerm) {
             recipeArticle.appendChild(instructionsList);
 
 
-    // Lägger till h3:an i recepts article
-    recipeArticle.appendChild(recipeTitle);
-
     // Lägger till hela receptet i receptsektionen
     recipeContainer.appendChild(recipeArticle);
+        } catch (error) {
+
+            // Tar bort receptet om något strular
+            recipeContainer.innerHTML = "";
+
+            // Visar ett meddelande om något strular
+            message.textContent = " Something went wrong. Try again.";
+
+            // Visar felet i konsolen
+            console.error(error);
+        }
 }

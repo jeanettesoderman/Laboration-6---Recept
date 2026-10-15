@@ -24,17 +24,13 @@ form.addEventListener("submit", function(event) {
     event.preventDefault();
      
      
-// Läser sökfrasen och ta bort onödiga mellanslg
+// Läser sökfrasen och tar bort onödiga mellanslg
 const searchTerm = searchInput.value.trim();
 
-// Kollar om sökfältet är tomt
-    if (searchTerm === "") {
-    errorMessage.textContent = "Du måste skriva ett sökord";
+// Kollar om sökfältet är tomt och avbryter sökningen om det är det
+if (!validateForm(searchTerm)) {
     return;
 }
-    // Tar bort tidigare felmeddelande
-    errorMessage.textContent = "";
-
 
 // Skriver ut sökfrasen i konsolen
 console.log(searchTerm);
@@ -73,10 +69,28 @@ async function fetchRecipes(searchTerm) {
     // Hämtar det första receptet
     const firstRecipe = data.recipes[0];
 
+    // Visar receptet på sidan
+    displayRecipe(firstRecipe);
+
     console.log(firstRecipe);
     console.log(firstRecipe.name);
 
-    // Tar bort tidigare recept
+   
+        } catch (error) {
+
+            // Tar bort receptet om något strular
+            recipeContainer.innerHTML = "";
+
+            // Visar ett meddelande om något strular
+            message.textContent = " Something went wrong. Try again.";
+
+            // Visar felet i konsolen
+            console.error(error);
+        }
+}
+// Visar receptet på sidan
+function displayRecipe(firstRecipe) {
+     // Tar bort tidigare recept
     recipeContainer.innerHTML = "";
 
     // Skapar en ruta som ska innehålla hela receptet
@@ -205,15 +219,16 @@ async function fetchRecipes(searchTerm) {
 
     // Lägger till hela receptet i receptsektionen
     recipeContainer.appendChild(recipeArticle);
-        } catch (error) {
 
-            // Tar bort receptet om något strular
-            recipeContainer.innerHTML = "";
+}
 
-            // Visar ett meddelande om något strular
-            message.textContent = " Something went wrong. Try again.";
+// Kollar om användaren har skrivit något i sökfältet
+function validateForm(searchTerm) {
+    if (searchTerm === "") {
+        errorMessage.textContent = "Du måste skriva ett sökord";
+        return false;
+    }
 
-            // Visar felet i konsolen
-            console.error(error);
-        }
+    errorMessage.textContent = "";
+    return true;
 }

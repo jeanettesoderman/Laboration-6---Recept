@@ -120,29 +120,47 @@ function displayRecipe(firstRecipe) {
     // Rutan får samma klass som i cssfilen
     recipeInfo.className = "recipe-info";
 
-    // Visar antalet portioner
+    // Skapar en rad för antal portioner
     const servings = document.createElement("p");
 
-    // Hämtar antalet portioner från receptet
-    servings.textContent = `Servings: ${firstRecipe.servings}`;
+    // Gör texten Servings fetstilad
+    const servingsLabel = document.createElement("strong");
+    servingsLabel.textContent = "Servings: ";
+    servingsLabel.style.fontWeight = "700";
 
-    // Lägger in texten i inforutan
+    // Lägger till etiketten och antalet portioner
+    servings.appendChild(servingsLabel);
+    servings.appendChild(document.createTextNode(firstRecipe.servings));
+
+    // Lägger till raden i inforutan
     recipeInfo.appendChild(servings);
 
     // Här visas förberedelsetiden
     const prepTime = document.createElement("p");
 
-    // Hämtar förberedelsetiden från receptet
-    prepTime.textContent = `Preparation time: ${firstRecipe.prepTimeMinutes} minutes`;
+    // Gör texten Preparation time fetstilad
+    const prepTimeLabel = document.createElement("strong");
+    prepTimeLabel.textContent = "Preparation time: ";
+    prepTimeLabel.style.fontWeight = "700";
 
+    // Lägger till texten och antalet minuter
+    prepTime.appendChild(prepTimeLabel);
+    prepTime.appendChild(document.createTextNode(`${firstRecipe.prepTimeMinutes} minutes`));
+    
     // Lägger till tiden i inforutan
     recipeInfo.appendChild(prepTime);
 
     // Här visas tillagningstiden
     const cookTime = document.createElement("p");
 
-    // Hämtar tillagningstiden från receptet
-    cookTime.textContent = `Cooking time: ${firstRecipe.cookTimeMinutes} minutes`;
+    // Gör texten Cooking time fetstilad
+    const cookTimeLabel = document.createElement("strong");
+    cookTimeLabel.textContent = "Cooking time: ";
+    cookTimeLabel.style.fontWeight = "700";
+
+    // Lägger till texten och antalet minuter
+    cookTime.appendChild(cookTimeLabel);
+    cookTime.appendChild(document.createTextNode(`${firstRecipe.cookTimeMinutes} minutes`));
 
     // Lägger till tiden i inforutan
     recipeInfo.appendChild(cookTime);
@@ -150,8 +168,14 @@ function displayRecipe(firstRecipe) {
     // Här visas svårighetsgraden
     const difficulty = document.createElement("p");
 
-    // Hämtar svårighetsgraden från receptet
-    difficulty.textContent = `Difficulty: ${firstRecipe.difficulty}`;
+    // Gör texten Difficulty fetstilad
+    const difficultyLabel = document.createElement("strong");
+    difficultyLabel.textContent = "Difficulty: ";
+    difficultyLabel.style.fontWeight = "700";
+
+    // Lägger till texten och svårighetsgraden
+    difficulty.appendChild(difficultyLabel);
+    difficulty.appendChild(document.createTextNode(firstRecipe.difficulty));
 
     // Lägger till svårighetsgraden i inforutan
     recipeInfo.appendChild(difficulty);
